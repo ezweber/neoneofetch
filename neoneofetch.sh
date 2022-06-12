@@ -22,22 +22,32 @@ EOF
 echo ""
 
 #Get current user
-echo "Username:" $USER
+echo -e "\e[32mUsername:\e[0m" $USER
 
 #Display memory usage
-echo -n "Memory: " ; free -h | grep Mem | awk '{print $3 "/" $2}'
+echo -ne "\e[32mMemory:\e[0m " ; free -h | grep Mem | awk '{print $3 "/" $2}'
 
 #Display CPU name
-echo -n "CPU model:" ; cat /proc/cpuinfo | grep "model name" | tail -n1 | cut -d ":" -f2
+echo -ne "\e[32mCPU model: \e[0m" ; lscpu | grep "Model name" | cut -d ":" -f2 | xargs
 
 #Display CPU usage
-echo -n "CPU Usage: " ; top -b -n1 | grep "Cpu(s)" | awk '{print $2 + $4"%"}'
+echo -ne "\e[32mCPU Usage:\e[0m " ; top -b -n1 | grep "Cpu(s)" | awk '{print $2 + $4"%"}'
 
 #Display system uptime
-echo -n "System uptime: " ; uptime | awk '{print $1}'
+echo -ne "\e[32mSystem uptime:\e[0m " ; uptime | awk '{print $1}'
 
 #Get current shell
-echo "Shell: "$SHELL
+echo -e "\e[32mShell:\e[0m "$SHELL    # Find a better way to do this, $SHELL is unreliable 
 
 #Current distro
-echo -n "Distro: " ; cat /etc/os-release | grep NAME | cut -d "\"" -f2 | head -n 1
+echo -ne "\e[32mDistro:\e[0m " ; grep NAME /etc/os-release | cut -d "\"" -f2 | head -n 1
+
+#Print running processes
+echo -ne "\e[32mRunning Processes:\e[0m " ; ps -u "$(echo $(printf '%s\n' $(users) | sort -u))" o user= | sort | uniq -c | sort -rn | awk '{print $1}'
+
+#Kernel version
+echo -ne "\e[32mKernel: \e[0m" ; uname -r
+
+#Time
+echo -ne "\e[32mTime: \e[0m" ; date | awk '{print $4 $5 " ""("$1")"}'
+
