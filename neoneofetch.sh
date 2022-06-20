@@ -48,9 +48,10 @@ cat << "EOF"
       |    `.       | `' \Zq              
      _)      \.___.,|     .'              
      \____   )MMMMMM|   .'                
-          `-'       `--'                  
-------------------------------------- 
+          `-'       `--'                   
 EOF
+echo "-------------------------------------"
+echo ""
 elif [ "$ascii_num" = 2 ]; then
 cat << "EOF"
      _-`````-,           ,- '- .
@@ -72,6 +73,8 @@ cat << "EOF"
                  '/'/'
                   `;
 EOF
+echo "-------------------------------------"
+echo ""
 elif [ "$ascii_num" = 3 ]; then
 cat << "EOF"
                                 ..,
@@ -94,8 +97,10 @@ llllllllllllll  lllllllllllllllllll
                        ````''*::cll
                                  ``
 EOF
+echo "-------------------------------------"
 echo ""
 fi
+
 
 #Get current user
 echo -e "\e[32mUsername:\e[0m" $USER
