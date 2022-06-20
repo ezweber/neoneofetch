@@ -1,25 +1,101 @@
 #!/bin/bash
+Help() {
+echo "Welcome to NeoNeofetch!"
+echo ""
+echo "-h for this menu"
+echo "-1 - 3 for ascii art options"
+echo "-n to not show ascii art"
+echo ""
+}
 
+ascii=true
+ascii_num=1
+
+while getopts "hn123" option; do
+	case $option in
+		h)
+			Help
+			exit;;
+          n)
+               ascii=false;;
+          1)
+               ascii_num=1;;
+          2)
+               ascii_num=2;;
+          3)
+               ascii_num=3;;              
+          *)
+               echo "Invaild, try neoneofetch -h"
+               exit;;
+
+	esac
+done
+
+if [ "$ascii" != false ] && [ "$ascii_num" = 1 ]; then 
 cat << "EOF"
-         _nnnn_                      
-        dGGGGMMb     ,"""""""""""""".
-       @p~qp~~qMb    | NeoNeofetch! |
-       M|@||@) M|   _;..............'
-       @,----.JM| -'
-      JS^\__/  qKL
-     dZP        qKRb
-    dZP          qKKb
-   fZP            SMMb
-   HZM            MMMM
-   FqM            MMMM
- __| ".        |\dS"qML
- |    `.       | `' \Zq              
-_)      \.___.,|     .'              
-\____   )MMMMMM|   .'                
-     `-'       `--'                  
+               _nnnn_                      
+              dGGGGMMb     ,"""""""""""""".
+             @p~qp~~qMb    | NeoNeofetch! |
+             M|@||@) M|   _;..............'
+             @,----.JM| -'
+            JS^\__/  qKL
+           dZP        qKRb
+         dZP          qKKb
+        fZP            SMMb
+        HZM            MMMM
+        FqM            MMMM
+      __| ".        |\dS"qML
+      |    `.       | `' \Zq              
+     _)      \.___.,|     .'              
+     \____   )MMMMMM|   .'                
+          `-'       `--'                  
 ------------------------------------- 
 EOF
+elif [ "$ascii_num" = 2 ]; then
+cat << "EOF"
+     _-`````-,           ,- '- .
+  .'   .- - |          | - -.  `.
+ /.'  /                     `.   \
+:/   :      _...   ..._      ``   :
+::   :     /._ .`:'_.._\.    ||   :
+::    `._ ./  ,`  :    \ . _.''   .
+`:.      /   |  -.  \-. \\_      /
+  \:._ _/  .'   .@)  \@) ` `\ ,.'
+     _/,--'       .- .\,-.`--`.
+       ,'/''     (( \ `  )
+        /'/'  \    `-'  (
+         '/''  `._,-----'
+          ''/'    .,---'
+           ''/'      ;:
+             ''/''  ''/
+               ''/''/''
+                 '/'/'
+                  `;
+EOF
+elif [ "$ascii_num" = 3 ]; then
+cat << "EOF"
+                                ..,
+                    ....,,:;+ccllll
+      ...,,+:;  cllllllllllllllllll
+,cclllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+llllllllllllll  lllllllllllllllllll
+`'ccllllllllll  lllllllllllllllllll
+       `' \\*::  :ccllllllllllllllll
+                       ````''*::cll
+                                 ``
+EOF
 echo ""
+fi
 
 #Get current user
 echo -e "\e[32mUsername:\e[0m" $USER
@@ -42,7 +118,7 @@ echo -e "\e[32mShell:\e[0m "$SHELL    # Find a better way to do this, $SHELL is 
 #Current distro
 echo -ne "\e[32mDistro:\e[0m " ; grep NAME /etc/os-release | cut -d "\"" -f2 | head -n 1
 
-#Print running processes
+#Print number of running processes
 echo -ne "\e[32mRunning Processes:\e[0m " ; ps -u "$(echo $(printf '%s\n' $(users) | sort -u))" o user= | sort | uniq -c | sort -rn | awk '{print $1}'
 
 #Kernel version
