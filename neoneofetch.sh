@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/env bash
+
 Help() {
 echo "Welcome to NeoNeofetch!"
 echo ""
@@ -31,7 +32,7 @@ while getopts "hn123" option; do
 	esac
 done
 
-if [ "$ascii" != false ] && [ "$ascii_num" = 1 ]; then 
+if [ "$ascii" = true ] && [ "$ascii_num" = 1 ]; then 
 cat << "EOF"
                _nnnn_                      
               dGGGGMMb     ,"""""""""""""".
@@ -93,7 +94,7 @@ llllllllllllll  lllllllllllllllllll
 llllllllllllll  lllllllllllllllllll
 llllllllllllll  lllllllllllllllllll
 `'ccllllllllll  lllllllllllllllllll
-       `' \\*::  :ccllllllllllllllll
+      `' \\*::  :ccllllllllllllllll
                        ````''*::cll
                                  ``
 EOF
@@ -115,7 +116,7 @@ echo -ne "\e[32mCPU model: \e[0m" ; lscpu | grep "Model name" | cut -d ":" -f2 |
 echo -ne "\e[32mCPU Usage:\e[0m " ; top -b -n1 | grep "Cpu(s)" | awk '{print $2 + $4"%"}'
 
 #Display system uptime
-echo -ne "\e[32mSystem uptime:\e[0m " ; uptime | awk '{print $1}'
+echo -ne "\e[32mSystem uptime:\e[0m " ; uptime -p | cut -d "p" -f2 | xargs
 
 #Get current shell
 echo -e "\e[32mShell:\e[0m "$SHELL    # Find a better way to do this, $SHELL is unreliable 
@@ -132,3 +133,5 @@ echo -ne "\e[32mKernel: \e[0m" ; uname -r
 #Time
 echo -ne "\e[32mTime: \e[0m" ; date | awk '{print $4 $5 " ""("$1")"}'
 
+#Get hostname
+echo -ne "\e[32mHostname: \e[0m" ; hostname
